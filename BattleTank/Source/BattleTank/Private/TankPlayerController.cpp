@@ -6,7 +6,8 @@
 
 
 
-
+	
+	
 
 void ATankPlayerController::BeginPlay()
 {
@@ -21,6 +22,13 @@ void ATankPlayerController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("PlayerController possesing: %s"), *(ControlledTank->GetName()));
 	}
 
+	
+}
+
+
+void ATankPlayerController::Tick( float DeltaTime ) 
+{
+	Super::Tick(DeltaTime);
 	
 }
 
