@@ -52,17 +52,17 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 	
 	
-	
+	//if it hits the landscape
 		//Tell controlled Tank to aim this point
 
 }
 
 
-//GetworldLocation if Linetrace through crosshair, true if hits Landscape
+//GetworldLocation if Linetrace through crosshair
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-	bool HitSomething = true;
-	HitLocation = FVector(1.0);
+	bool HitSomething = false;
+
 
 
 	return HitSomething;
