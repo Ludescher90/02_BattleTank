@@ -21,7 +21,7 @@ private:
 
 	virtual void BeginPlay() override;
 
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void Tick( float DeltaSeconds ) override;
 
 	//Start the tan moving the barrel so that a shot would it where 
 	//the crosshair intersects the world
@@ -36,6 +36,14 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float CrossHairYLocation = 0.33333;
+
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000;
+
 	
-	bool ATankPlayerController::GetLookDirection(FVector2D ScreenLcoation, FVector& LookDirection) const;
+	bool GetLookDirection(FVector2D ScreenLcoation, FVector& LookDirection) const;
+
+	//Return an OUT Parameter, true if it Hit anything
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+	
 };
