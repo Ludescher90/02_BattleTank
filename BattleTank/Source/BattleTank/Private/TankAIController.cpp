@@ -33,10 +33,10 @@ void ATankAIController::BeginPlay()
 
 
 
-void ATankAIController::Tick(float DeltaTime)
+void ATankAIController::Tick( float DeltaTime )
 {
 
-	Super::Tick(DeltaTime);
+	Super::Tick( DeltaTime );
 	
 	AimTowardsPlayerTank();
 
@@ -56,8 +56,6 @@ void ATankAIController::AimTowardsPlayerTank()
 	FVector HitLocation = PlayerTank->GetActorLocation();
 
 	GetControlledTank()->AimAt(HitLocation);
-
-
 
 }
 
