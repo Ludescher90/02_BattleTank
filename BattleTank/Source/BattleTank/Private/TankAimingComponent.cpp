@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "TankAimingComponent.h"
 
 
@@ -11,7 +12,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = true;// TODO should this really tick
 
 	// ...
 }
@@ -51,19 +52,25 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		false,
 		0,
 		0,
-		ESuggestProjVelocityTraceOption::DoNotTrace
+		ESuggestProjVelocityTraceOption::DoNotTrace 
 	)
 		);
 
 	if(bHaveAimSolution)
 
 	{
-		auto TankName = GetOwner()->GetName();
+		auto Time = GetWorld()->GetTimeSeconds();
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s"),*TankName, *AimDirection.ToString());
-		MoveBarrelTowards(AimDirection);
 
-		
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
+		MoveBarrelTowards(AimDirection);
+	
+	}
+
+	else
+	{
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solution found"), Time);
 
 	}
 }
@@ -71,7 +78,20 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
+	
+
+	if (!BarrelToSet) { return; }
+
 	Barrel = BarrelToSet;
+
+	
+
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	if (!TurretToSet) { return; }
+	Turret = TurretToSet; 
 
 }
 
@@ -81,7 +101,10 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	
-	Barrel->Elevate(5); //TODO Remove magic number
-	
+    DeltaRotator =	DeltaRotator.GetNormalized();
+	Barrel->Elevate(DeltaRotator.Pitch); //DeltaRotator clamped in TankBarrel
+	Turret->RotateTurret(DeltaRotator.Yaw);
+
 }
+
+
