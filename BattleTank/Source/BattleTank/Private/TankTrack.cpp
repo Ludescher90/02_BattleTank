@@ -9,7 +9,7 @@ void UTankTrack::SetThrottle(float Throttle)
 {
 
 	//Could not be overridden in the ProjectSettings
-	Throttle = FMath::Clamp<float>(Throttle, -1, 1);
+	Throttle = FMath::Clamp<float>(Throttle, -0.5, 1);
 
 	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();

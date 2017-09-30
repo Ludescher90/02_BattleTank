@@ -21,6 +21,7 @@ void ATankAIController::Tick( float DeltaTime )
 	Super::Tick( DeltaTime );
 	
 	AimTowardsPlayerTank();
+	MoveTowardsPlayerTank();
 
 
 }
@@ -39,7 +40,7 @@ void ATankAIController::AimTowardsPlayerTank()
 
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 		
-		ControlledTank->Fire(); // TODO Firing Limit Rate
+		ControlledTank->Fire(); 
 
 	}
 
@@ -54,6 +55,24 @@ void ATankAIController::AimTowardsPlayerTank()
 
 
 
+void ATankAIController::MoveTowardsPlayerTank()
+{
+	
+	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto ControlledTank = Cast<ATank>(GetPawn());
+	if (PlayerTank && ControlledTank) {
+	
+		MoveToActor(PlayerTank, AcceptanceRadius);
+	
+	
+	}
 
+	else
+	{
+
+		UE_LOG(LogTemp, Warning, TEXT("Player or ControlledTank Missing in TankAIController"));
+
+	}
+}
 
 

@@ -24,4 +24,9 @@ private:
 
 	void AimTowardsPlayerTank();
 
+	void MoveTowardsPlayerTank();
+	
+	//How close can the AITank move to the PlayerTank
+	float AcceptanceRadius = 3000;
+
 };
