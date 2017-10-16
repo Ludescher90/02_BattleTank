@@ -14,14 +14,14 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 	auto TankName = GetName();
-	UE_LOG(LogTemp, Log, TEXT(" DONKEY: Tank %s Construct"), *TankName)
+	UE_LOG(LogTemp, Log, TEXT(" DONKEY:  %s c++ Construct"), *TankName)
 }
 
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	auto TankName = GetName();
-	UE_LOG(LogTemp, Log, TEXT(" DONKEY: Tank %s "), *TankName)
+	UE_LOG(LogTemp, Log, TEXT(" DONKEY: Tank %s c++ beginplay"), *TankName)
 
 }
 

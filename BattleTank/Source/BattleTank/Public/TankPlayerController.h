@@ -7,8 +7,9 @@
 #include "TankPlayerController.generated.h"// Must be the last include
 
 /**
- * 
+ * Responsible for helping the PLayer aim.
  */
+
 //Forward Declaration
 class UTank;
 
@@ -22,7 +23,8 @@ protected:
 	UFUNCTION(BLueprintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
 
-
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
 	
