@@ -27,7 +27,7 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 	if (!LeftTrack || !RightTrack) { return; }
 
 	auto Name = GetName();
-	UE_LOG(LogTemp, Warning, TEXT(" %s: throttle  axis value: %f "), *Name, Throw);
+	//UE_LOG(LogTemp, Warning, TEXT(" %s: throttle  axis value: %f "), *Name, Throw);
 
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
@@ -42,7 +42,7 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	if (!LeftTrack || !RightTrack) { return; }
 
 	auto Name = GetName();
-	UE_LOG(LogTemp, Warning, TEXT(" %s: throttle  axis value: %f "), *Name, Throw);
+	//UE_LOG(LogTemp, Warning, TEXT(" %s: throttle  axis value: %f "), *Name, Throw);
 
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
