@@ -12,6 +12,7 @@
 
 //Forward Declaration
 class UTank;
+class UTankAimingComponent;
 
 
 UCLASS()

@@ -35,7 +35,7 @@ void ATankAIController::AimTowardsPlayerTank()
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControlledTank = Cast<ATank>(GetPawn());
 
-	if (PlayerTank && ControlledTank)
+	if (ensure(PlayerTank && ControlledTank))
 	{
 
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
@@ -60,7 +60,7 @@ void ATankAIController::MoveTowardsPlayerTank()
 	
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControlledTank = Cast<ATank>(GetPawn());
-	if (PlayerTank && ControlledTank) {
+	if (ensure(PlayerTank && ControlledTank)) {
 	
 		MoveToActor(PlayerTank, AcceptanceRadius);
 	
