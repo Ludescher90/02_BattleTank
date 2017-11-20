@@ -11,7 +11,7 @@
  */
 
 //Forward Declaration
-class UTank;
+
 class UTankAimingComponent;
 
 
@@ -19,10 +19,8 @@ UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-protected:
 
-	UFUNCTION(BLueprintCallable, Category = "Setup")
-	ATank* GetControlledTank() const;
+protected:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
