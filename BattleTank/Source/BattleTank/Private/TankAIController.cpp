@@ -35,21 +35,11 @@ void ATankAIController::AimTowardsPlayerTank()
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControlledTank = Cast<ATank>(GetPawn());
 
-	if (ensure(PlayerTank && ControlledTank))
-	{
+	if (!ensure(PlayerTank && ControlledTank)) { return; }
+	
+	ControlledTank->AimAt(PlayerTank->GetActorLocation());
 
-		ControlledTank->AimAt(PlayerTank->GetActorLocation());
-		
-		ControlledTank->Fire(); 
-
-	}
-
-	else
-	{
-
-		UE_LOG(LogTemp, Warning, TEXT("Player or ControlledTank Missing in TankAIController"));
-
-	}
+	ControlledTank->Fire();
 
 }
 
@@ -60,19 +50,10 @@ void ATankAIController::MoveTowardsPlayerTank()
 	
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControlledTank = Cast<ATank>(GetPawn());
-	if (ensure(PlayerTank && ControlledTank)) {
-	
-		MoveToActor(PlayerTank, AcceptanceRadius);
-	
-	
-	}
+	if (!ensure(PlayerTank && ControlledTank)) { return; }
 
-	else
-	{
+	MoveToActor(PlayerTank, AcceptanceRadius);
 
-		UE_LOG(LogTemp, Warning, TEXT("Player or ControlledTank Missing in TankAIController"));
-
-	}
 }
 
 
