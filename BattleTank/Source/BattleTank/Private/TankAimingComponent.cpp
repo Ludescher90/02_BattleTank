@@ -36,21 +36,57 @@ void UTankAimingComponent::BeginPlay()
 void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
-	{
-		FiringState = EFiringState::Reloading;
-	}
 
-	else if (IsBarrelMoving())
+
+	SetFiringState();
+
+}
+
+
+
+void UTankAimingComponent::SetFiringState()
+{
+	if (FiringState != EFiringState::NoAmmo)
 	{
-		FiringState = EFiringState::Aiming;
+		if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+		{
+
+
+			FiringState = EFiringState::Reloading;
+
+
+
+		}
+
+		else if (IsBarrelMoving())
+		{
+			FiringState = EFiringState::Aiming;
+		}
+
+		else
+		{
+			FiringState = EFiringState::Locked;
+		}
 	}
 
 	else
 	{
-		FiringState = EFiringState::Locked;
+		FiringState = EFiringState::NoAmmo;
 	}
+}
 
+void UTankAimingComponent::SetAmmoState()
+{
+	if (AmmoState > 1)
+	{
+		AmmoState--;
+	}
+	else
+	{
+		AmmoState--;
+		FiringState = EFiringState::NoAmmo;
+
+	}
 }
 
 bool UTankAimingComponent::IsBarrelMoving()
@@ -117,8 +153,7 @@ void UTankAimingComponent::Fire()
 {
 
 	if (!ensure(Barrel)) { return; }
-	
-	if (FiringState!=EFiringState::Reloading)
+	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
 	{
 
 		//Spawn a Projectile at the socket location on the barrel
@@ -131,7 +166,16 @@ void UTankAimingComponent::Fire()
 		if (!ensure(Projectile)) { return; }
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		SetAmmoState();
+		
 
+
+	}
+
+
+	else
+	{
+		//TODO Text in UI that tells you why you cant fire
 	}
 }
 
@@ -149,11 +193,11 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	//Always yaw the shortest way
 	Barrel->Elevate(DeltaRotator.Pitch); //DeltaRotator clamped in TankBarrel
 
-	if (DeltaRotator.Yaw < 180)
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
 	{
 		Turret->RotateTurret(DeltaRotator.Yaw);
 	}
-	else
+	else //Avoid taking the long way
 	{
 		Turret->RotateTurret(-DeltaRotator.Yaw);
 	}

@@ -7,7 +7,7 @@
 
 //Enum for firing state
 UENUM()
-enum class EFiringState : uint8 {Reloading, Aiming, Locked};
+enum class EFiringState : uint8 {Reloading, Aiming, Locked, NoAmmo};
 
 //Forward Declarations:
 class UTankBarrel; 
@@ -30,6 +30,10 @@ public:
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
+	void SetFiringState();
+
+	void SetAmmoState();
+
 	void AimAt(FVector HitLocation);
 
 	
@@ -47,7 +51,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
-
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 AmmoState = 20;
+	
 private:
 
 
