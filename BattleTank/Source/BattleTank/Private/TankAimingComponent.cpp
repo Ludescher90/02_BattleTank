@@ -71,6 +71,14 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 }
 
 
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+
+	return FiringState;
+}
+
+
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel)) { return; }
@@ -127,6 +135,8 @@ void UTankAimingComponent::Fire()
 	}
 }
 
+
+
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {	
 	if (!ensure(Barrel) || !ensure(Turret)) { return; }
@@ -135,9 +145,18 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
     DeltaRotator =	DeltaRotator.GetNormalized();
-	Barrel->Elevate(DeltaRotator.Pitch); //DeltaRotator clamped in TankBarrel
-	Turret->RotateTurret(DeltaRotator.Yaw);
 
+	//Always yaw the shortest way
+	Barrel->Elevate(DeltaRotator.Pitch); //DeltaRotator clamped in TankBarrel
+
+	if (DeltaRotator.Yaw < 180)
+	{
+		Turret->RotateTurret(DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->RotateTurret(-DeltaRotator.Yaw);
+	}
 }
 
 

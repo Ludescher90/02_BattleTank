@@ -43,8 +43,13 @@ void ATankAIController::AimTowardsPlayerTank()
 
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
+	if(AimingComponent->GetFiringState() == EFiringState::Locked)
 
-	AimingComponent->Fire();
+	{
+	
+		AimingComponent->Fire();
+
+	}
 
 }
 

@@ -16,6 +16,11 @@ class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 
+protected:
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	float AcceptanceRadius = 5000;
+
+
 private:
 	virtual void BeginPlay() override;
 
@@ -27,6 +32,6 @@ private:
 	void MoveTowardsPlayerTank();
 	
 	//How close can the AITank move to the PlayerTank
-	float AcceptanceRadius = 3000;
+	
 
 };
