@@ -17,6 +17,7 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 
 protected:
+	//How close can the AITank move to the PlayerTank
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	float AcceptanceRadius = 5000;
 
@@ -26,12 +27,15 @@ private:
 
 	virtual void Tick( float DeltaSeconds ) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
 
 	void AimTowardsPlayerTank();
 
 	void MoveTowardsPlayerTank();
 	
-	//How close can the AITank move to the PlayerTank
+	UFUNCTION()
+	void OnPossedTankDeath();
 	
+
 
 };

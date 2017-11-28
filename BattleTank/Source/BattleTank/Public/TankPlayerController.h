@@ -32,6 +32,8 @@ private:
 
 	virtual void Tick( float DeltaSeconds ) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 	//Start the tan moving the barrel so that a shot would it where 
 	//the crosshair intersects the world
 
@@ -55,4 +57,7 @@ private:
 	//Return an OUT Parameter, true if it Hit anything
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 	
+	UFUNCTION()
+	void OnPlayerTankDeath();
+
 };
